@@ -1,5 +1,6 @@
 #include <ThemeController.h>
 #include <crow/address.h>
+#include <crow/gates/udpgate.h>
 #include <nos/print.h>
 
 ThemeController::ThemeController(QObject *parent) : QObject(parent)
@@ -15,6 +16,7 @@ void ThemeController::init_subscription()
 
 void ThemeController::start_crow_tower()
 {
+    crow::create_udpgate(12);
     crow::start_spin();
 }
 
