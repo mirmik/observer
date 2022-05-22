@@ -7,7 +7,7 @@ MainWindow::MainWindow()
     themeController = new ThemeController(this);
     setCentralWidget(mdiArea);
 
-    mdiArea->addSubWindow(new Observer);
+    //mdiArea->addSubWindow(new Observer);
 
     makeAction();
     makeToolBars();
@@ -44,7 +44,9 @@ void MainWindow::makeMenus()
 
 void MainWindow::newWindow()
 {
-    auto observer = new Observer;
+    auto theme = QInputDialog::getText(this, tr("Theme"), tr("Theme"));
+
+    auto observer = new Observer(theme);
     mdiArea->addSubWindow(observer);
     observer->show();
 }
