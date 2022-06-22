@@ -6,10 +6,7 @@ licant.include("rabbit")
 
 licant.cxx_application("observer",
 	sources = [
-		"src/main.cpp", 
-		"src/MainWindow.cpp", 
-		"src/Observer.cpp", 
-		"src/ThemeController.cpp"
+		"src/*.cpp",
 	],
 	mdepends = ["rabbit"],
 
