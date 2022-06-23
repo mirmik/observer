@@ -4,7 +4,7 @@
 MainWindow::MainWindow()
 {
     mdiArea = new QMdiArea;
-    themeController = new ThemeController(this);
+    //themeController = new ThemeController(this);
     setCentralWidget(mdiArea);
 
     //mdiArea->addSubWindow(new Observer);
@@ -46,7 +46,17 @@ void MainWindow::newWindow()
 {
     auto theme = QInputDialog::getText(this, tr("Theme"), tr("Theme"));
 
-    auto observer = new Observer(theme);
-    mdiArea->addSubWindow(observer);
-    observer->show();
+    //auto observer = new Observer(theme);
+    //mdiArea->addSubWindow(observer);
+    //observer->show();
+}
+
+void MainWindow::addCsvSourceAction() 
+{
+    auto ret = QFileDialog::getOpenFileName();
+    workspace.add_csv_source(ret.toStdString());
+}
+
+void MainWindow::addViewAction() 
+{
 }

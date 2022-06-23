@@ -9,16 +9,38 @@ from licant.libs import include
 application("runtests",
 	sources = [
 		"*.cpp",
-		"../src/Workspace.cpp"
+		"../src/Workspace.cpp",
+		"../src/MainWindow.cpp",
 	],
 
-	cxxstd="c++20",
+	#cxxstd="c++20",
 	ccstd="c11",
-	cxx_flags = "-g -Werror=all -Werror=extra -Weffc++",
-	cc_flags = "-g -Werror=all -Werror=extra",
-
 	include_paths = [".", "../src"],
-	libs = ["igris"]
+
+	libs=["igris", "nos", "crow", "rabbit", "ralgo", "Qt5Core", "Qt5Widgets", "Qt5Gui", "Qt5OpenGL"],
+
+	cc_flags = " -g -O0 -fPIC -pedantic -Werror=all -Werror=extra",
+
+	ld_flags = "-DQT_CHARTS_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -g -O0 " 
+	"-I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5 "
+	"-I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5 "
+	"-I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5 "
+	"-I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/x86_64-linux-gnu/qt5 "
+	"-fPIC -pedantic -Werror=all",
+
+	cxx_flags = "-DQT_CHARTS_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -g -O0 " 
+	"-I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5 "
+	"-I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5 "
+	"-I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5 "
+	"-I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/x86_64-linux-gnu/qt5 "
+	"-I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5 "
+	"-fPIC -pedantic -Werror=all",
+
+	qt_moc = [
+		"../src/MainWindow.h", 
+		"../src/View.h", 
+	],
+
 )
 
 licant.ex("runtests")

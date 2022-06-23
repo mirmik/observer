@@ -1,10 +1,18 @@
 #include <QtWidgets>
-#include <Observer.h>
-#include <ThemeController.h>
+//#include <Observer.h>
+//#include <ThemeController.h>
+#include <Workspace.h>
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+    QWidget * central_widget;
+    QSplitter * horsplitter;
+    QTableWidget * sources_table;
+
+    private:
+        Workspace workspace;
 
     public:
         MainWindow();
@@ -14,9 +22,13 @@ class MainWindow : public QMainWindow
         void makeToolBars();
         void makeAction();
         void makeMenus();
+        void saveWorkspaceAction();
+        void loadWorkspaceAction();
 
     private slots:
         void newWindow();
+        void addCsvSourceAction();
+        void addViewAction();
 
     private:
         QMdiArea *mdiArea = nullptr;
@@ -25,5 +37,5 @@ class MainWindow : public QMainWindow
         QAction *newWindowAction = nullptr;
         QAction *exitAction = nullptr;
 
-        ThemeController *themeController = nullptr;
+        //ThemeController *themeController = nullptr;
 };
