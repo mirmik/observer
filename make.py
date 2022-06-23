@@ -10,7 +10,7 @@ licant.cxx_application("observer",
 	],
 	mdepends = ["rabbit"],
 
-	libs=["igris", "nos", "crow", "Qt5Core", "Qt5Widgets", "Qt5Charts", "Qt5Gui", "Qt5OpenGL"],
+	libs=["igris", "nos", "crow", "Qt5Core", "Qt5Widgets", "Qt5Gui", "Qt5OpenGL"],
 	include_paths = ["src", "."],
 
 	cc_flags = " -g -O0 -fPIC -pedantic -Werror=all -Werror=extra",
