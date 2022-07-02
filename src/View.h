@@ -9,7 +9,8 @@ class View : public QWidget
     Q_OBJECT
 
 public:
-    View(){}
+    View()
+    {}
 };
 
 class ChartView  : public View
@@ -27,6 +28,7 @@ public:
         layout = new QVBoxLayout;
         layout->addWidget(chart);
         setLayout(layout);
+        setMinimumSize(200, 200);
     }
 };
 

@@ -3,6 +3,9 @@
 
 #include <Source.h>
 #include <igris/series/field_annotation.h>
+//#include <igris/series/fiber.h>
+
+class Source;
 
 class FiberID 
 {
@@ -14,11 +17,17 @@ public:
 
 class Fiber 
 {
-	std::shared_ptr<Source> source;
+	Source& source;
 	igris::series_field_annotation annot;
 
 public:
-	Fiber() = default;
+	Fiber(Source& source, igris::series_field_annotation annot) 
+		:source(source), annot(annot)
+	{}
+
+	std::string name();
+
+	~Fiber() { nos::println("Fiber was destroyed:", name()); }
 };
 
 #endif

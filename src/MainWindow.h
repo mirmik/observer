@@ -7,35 +7,36 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-    QWidget * central_widget;
-    QSplitter * horsplitter;
-    QTableWidget * sources_table;
+    QWidget * central_widget = nullptr;
+    QSplitter * horsplitter = nullptr;
+    QListWidget * sources_table = nullptr;
 
-    private:
-        Workspace workspace;
+    QMdiArea *mdiArea = nullptr;
+    QToolBar *toolbar = nullptr;
 
-    public:
-        MainWindow();
-        ~MainWindow() = default;
+    QAction *newWindowAction = nullptr;
+    QAction *newViewAction = nullptr;
+    QAction *exitAction = nullptr;
 
-    private:
-        void makeToolBars();
-        void makeAction();
-        void makeMenus();
-        void saveWorkspaceAction();
-        void loadWorkspaceAction();
+private:
+    Workspace workspace;
 
-    private slots:
-        void newWindow();
-        void addCsvSourceAction();
-        void addViewAction();
+public:
+    MainWindow();
+    ~MainWindow() = default;
 
-    private:
-        QMdiArea *mdiArea = nullptr;
-        QToolBar *toolbar = nullptr;
+private:
+    void makeToolBars();
+    void makeAction();
+    void makeMenus();
+    void saveWorkspaceAction();
+    void loadWorkspaceAction();
 
-        QAction *newWindowAction = nullptr;
-        QAction *exitAction = nullptr;
+    void update_soures_table();
+    void init_sources_table();
 
-        //ThemeController *themeController = nullptr;
+private slots:
+    void newWindow();
+    void addCsvSourceAction();
+    void newView();
 };

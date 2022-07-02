@@ -33,7 +33,9 @@ licant.cxx_application("observer",
 	qt_moc = [
 		"src/MainWindow.h", 
 		"src/Observer.h", 
-		"src/ThemeController.h"
+		"src/ThemeController.h",
+		"src/ChartViewSettings.h",
+		"src/View.h",
 	],
 )
 

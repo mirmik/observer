@@ -1,11 +1,19 @@
 #include <MainWindow.h>
 #include <nos/print.h>
+#include <ChartViewSettings.h>
+#include <View.h>
 
 MainWindow::MainWindow()
 {
     mdiArea = new QMdiArea;
+    horsplitter = new QSplitter;
+    sources_table = new QListWidget;
+
+    horsplitter->addWidget(mdiArea);
+    horsplitter->addWidget(sources_table);
+
     //themeController = new ThemeController(this);
-    setCentralWidget(mdiArea);
+    setCentralWidget(horsplitter);
 
     //mdiArea->addSubWindow(new Observer);
 
@@ -13,7 +21,30 @@ MainWindow::MainWindow()
     makeToolBars();
     makeMenus();
 
-    setWindowTitle(tr("CrowObserver"));
+    setWindowTitle(tr("Observer"));
+
+    init_sources_table();
+}
+
+void MainWindow::init_sources_table() 
+{
+    update_soures_table();
+}
+
+void MainWindow::update_soures_table() 
+{   
+    std::vector<std::shared_ptr<Fiber>> fibers;
+    for (auto& source: workspace.sources) 
+    {
+        sources_table->addItem(QString::fromStdString(source->source_info()));
+        auto f = source->fibers();
+        std::copy(f.begin(), f.end(), std::back_inserter(fibers));
+    }
+
+    for (auto& fiber: fibers)  
+    {
+        sources_table->addItem(QString::fromStdString(fiber->name()));
+    }    
 }
 
 void MainWindow::makeToolBars() 
@@ -21,14 +52,20 @@ void MainWindow::makeToolBars()
     toolbar = new QToolBar;
     addToolBar(Qt::LeftToolBarArea, toolbar);
     toolbar->addAction(newWindowAction);
+    toolbar->addAction(newViewAction);
 }
 
 void MainWindow::makeAction()
 {
     newWindowAction = new QAction(tr("&New"), this);
     newWindowAction->setShortcuts(QKeySequence::New);
-    newWindowAction->setStatusTip(tr("Create a new file"));
+    newWindowAction->setStatusTip(tr("Create a source"));
     connect(newWindowAction, &QAction::triggered, this, &MainWindow::newWindow);
+
+    newViewAction = new QAction(tr("&NewView"), this);
+    newViewAction->setShortcuts(QKeySequence::New);
+    newViewAction->setStatusTip(tr("Create a new view"));
+    connect(newViewAction, &QAction::triggered, this, &MainWindow::newView);
 
     exitAction = new QAction(tr("&Exit"), this);
     exitAction->setShortcuts(QKeySequence::Quit);
@@ -46,9 +83,9 @@ void MainWindow::newWindow()
 {
     auto theme = QInputDialog::getText(this, tr("Theme"), tr("Theme"));
 
-    //auto observer = new Observer(theme);
-    //mdiArea->addSubWindow(observer);
-    //observer->show();
+    auto observer = new ChartView;
+    mdiArea->addSubWindow(observer);
+    observer->show();
 }
 
 void MainWindow::addCsvSourceAction() 
@@ -57,6 +94,8 @@ void MainWindow::addCsvSourceAction()
     workspace.add_csv_source(ret.toStdString());
 }
 
-void MainWindow::addViewAction() 
+void MainWindow::newView() 
 {
+    ChartViewSettings view_settings(workspace.fibers());
+    view_settings.exec();
 }
