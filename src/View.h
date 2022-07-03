@@ -3,6 +3,7 @@
 
 #include <QtWidgets>
 #include <rabbit/chart/qtchart.h>
+#include <ViewAdaptor.h>
 
 class View : public QWidget 
 {
@@ -20,9 +21,10 @@ class ChartView  : public View
 public:
     rabbit::qtchart * chart;
     QVBoxLayout * layout;
+    ChartViewAdaptor& adaptor;
 
 public:
-    ChartView() : View() 
+    ChartView(ChartViewAdaptor& adaptor) : View(), adaptor(adaptor)
     {
         chart = new rabbit::qtchart;
         layout = new QVBoxLayout;

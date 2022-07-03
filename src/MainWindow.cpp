@@ -53,6 +53,7 @@ void MainWindow::makeToolBars()
     addToolBar(Qt::LeftToolBarArea, toolbar);
     toolbar->addAction(newWindowAction);
     toolbar->addAction(newViewAction);
+    toolbar->addAction(newTestViewAction);
 }
 
 void MainWindow::makeAction()
@@ -66,6 +67,11 @@ void MainWindow::makeAction()
     newViewAction->setShortcuts(QKeySequence::New);
     newViewAction->setStatusTip(tr("Create a new view"));
     connect(newViewAction, &QAction::triggered, this, &MainWindow::newView);
+
+    newTestViewAction = new QAction(tr("&NewTestView"), this);
+    newTestViewAction->setShortcuts(QKeySequence::New);
+    newTestViewAction->setStatusTip(tr("Create a new view"));
+    connect(newTestViewAction, &QAction::triggered, this, &MainWindow::newTestView);
 
     exitAction = new QAction(tr("&Exit"), this);
     exitAction->setShortcuts(QKeySequence::Quit);
@@ -81,11 +87,11 @@ void MainWindow::makeMenus()
 
 void MainWindow::newWindow()
 {
-    auto theme = QInputDialog::getText(this, tr("Theme"), tr("Theme"));
+    //auto theme = QInputDialog::getText(this, tr("Theme"), tr("Theme"));
 
-    auto observer = new ChartView;
-    mdiArea->addSubWindow(observer);
-    observer->show();
+    //auto observer = new ChartView;
+    //mdiArea->addSubWindow(observer);
+    //observer->show();
 }
 
 void MainWindow::addCsvSourceAction() 
@@ -98,4 +104,23 @@ void MainWindow::newView()
 {
     ChartViewSettings view_settings(workspace.fibers());
     view_settings.exec();
+    auto fiber = view_settings.choisen_fiber();
+
+    //auto& adaptor = workspace.create_chart_view_adaptor(fiber);
+    //auto& view = create_chart_view(adaptor);
+
+    //view.show();
+}
+
+ChartView* MainWindow::create_chart_view(ChartViewAdaptor& adaptor) 
+{
+    ChartView* view = new ChartView(adaptor);
+    return view; 
+}
+
+void MainWindow::newTestView() 
+{
+    auto& adaptor = workspace.create_chart_view_adaptor();
+    auto* view = create_chart_view(adaptor);
+    view->show();
 }

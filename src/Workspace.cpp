@@ -27,3 +27,16 @@ std::vector<std::shared_ptr<Fiber>> Workspace::fibers()
 	}
 	return ret;	
 }
+
+ChartViewAdaptor& Workspace::create_chart_view_adaptor() 
+{
+	auto* adaptor = new ChartViewAdaptor(this);
+	views.emplace_back(static_cast<ViewAdaptor*>(adaptor));
+	return *adaptor;
+}
+
+ChartViewAdaptor& Workspace::create_chart_view_adaptor(std::shared_ptr<Fiber> fiber) 
+{
+	auto& adaptor = create_chart_view_adaptor();
+	return adaptor;
+}

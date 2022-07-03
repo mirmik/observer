@@ -12,7 +12,7 @@ class Workspace
 {
 public:
 	std::list<std::shared_ptr<Source>> sources = {};
-	std::list<ViewAdaptor*> views = {};
+	std::list<std::unique_ptr<ViewAdaptor>> views = {};
 
 public:
 	Workspace();
@@ -25,6 +25,9 @@ public:
 	void deserialize_workspace(const std::string& dump);
 
 	std::vector<std::shared_ptr<Fiber>> fibers();
+
+	ChartViewAdaptor& create_chart_view_adaptor(); 
+	ChartViewAdaptor& create_chart_view_adaptor(std::shared_ptr<Fiber> fiber); 
 };
 
 #endif

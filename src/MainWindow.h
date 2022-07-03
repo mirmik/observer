@@ -2,6 +2,8 @@
 //#include <Observer.h>
 //#include <ThemeController.h>
 #include <Workspace.h>
+#include <View.h>
+#include <ViewAdaptor.h>
 
 class MainWindow : public QMainWindow
 {
@@ -16,6 +18,7 @@ class MainWindow : public QMainWindow
 
     QAction *newWindowAction = nullptr;
     QAction *newViewAction = nullptr;
+    QAction *newTestViewAction = nullptr;
     QAction *exitAction = nullptr;
 
 private:
@@ -35,8 +38,11 @@ private:
     void update_soures_table();
     void init_sources_table();
 
+    ChartView* create_chart_view(ChartViewAdaptor& adaptor);
+
 private slots:
     void newWindow();
     void addCsvSourceAction();
     void newView();
+    void newTestView();
 };

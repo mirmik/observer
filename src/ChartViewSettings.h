@@ -12,9 +12,13 @@ class ChartViewSettings : public QDialog
     QListWidget * wdg;
     QVBoxLayout * layout;
 
+    std::vector<std::shared_ptr<Fiber>> fibers;
+    
+
 public:
     ChartViewSettings(std::vector<std::shared_ptr<Fiber>> fibers)
     {
+        this->fibers = fibers;
         wdg = new QListWidget;
         auto vec = ralgo::vecops::transform<std::vector<std::string>>(fibers,
             [](const std::shared_ptr<Fiber>& ref)
@@ -33,6 +37,19 @@ public:
         layout = new QVBoxLayout;
         layout->addWidget(wdg);
         setLayout(layout);
+
+        connect(wdg, &QListWidget::itemDoubleClicked, 
+                this, &ChartViewSettings::itemDoubleClicked);
+    }
+
+    void itemDoubleClicked(QListWidgetItem* listWidgetItem) 
+    {
+        close();
+    }
+
+    std::shared_ptr<Fiber> choisen_fiber() 
+    {
+        return fibers[wdg->currentRow()];
     }
 };
 

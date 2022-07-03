@@ -15,15 +15,18 @@ public:
     std::string fiber_name;
 };
 
-class Fiber 
+class Fiber
 {
 	Source& source;
 	igris::series_field_annotation annot;
 
 public:
+	Fiber() = default;
 	Fiber(Source& source, igris::series_field_annotation annot) 
 		:source(source), annot(annot)
 	{}
+	Fiber(const Fiber& fiber) = delete;
+	Fiber& operator=(const Fiber& fiber) = delete;
 
 	std::string name();
 
